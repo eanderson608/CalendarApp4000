@@ -10,7 +10,7 @@ Created by patron on 3/5/16
 
 public class ServiceGenerator {
 
-    public static final String API_BASE_URL = "http://24.177.122.15/";
+    public static final String API_BASE_URL = "http://192.168.1.140:9000/";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

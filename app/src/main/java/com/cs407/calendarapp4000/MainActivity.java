@@ -3,6 +3,7 @@ package com.cs407.calendarapp4000;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set up Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         //initialize fields
         context = this;
         listView = (ListView) findViewById(R.id.list_view);
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         getEventsRetro();
     }
+
 
     private void getEventsRetro() {
 
