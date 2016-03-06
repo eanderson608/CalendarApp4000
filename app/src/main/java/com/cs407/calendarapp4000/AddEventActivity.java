@@ -36,7 +36,7 @@ public class AddEventActivity extends AppCompatActivity {
 
             // add Event
             case R.id.action_done:
-                String selectedDate = getIntent().getStringExtra("EXTRA_DATE");
+                String selectedDate = getIntent().getExtras().getString("EXTRA_DATE");
                 Toast.makeText(this, selectedDate, Toast.LENGTH_LONG).show();
 
             default:

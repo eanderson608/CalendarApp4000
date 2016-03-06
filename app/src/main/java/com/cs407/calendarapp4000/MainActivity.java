@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String selectedDate = cal.getTime().toString();
+                selectedDate = cal.getTime().toString();
                 Toast.makeText(context, selectedDate, Toast.LENGTH_LONG).show();
             }
         });
