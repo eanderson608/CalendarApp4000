@@ -80,10 +80,11 @@ public class CustomAdapter extends BaseAdapter {
 
         // Format time from longDate
         cal = Calendar.getInstance();
-        SimpleDateFormat longDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm aaa", Locale.US);
+        SimpleDateFormat longDateFormat = new SimpleDateFormat("yyyy-MM-dd K:mm", Locale.US);
 
         try {
             cal.setTime(longDateFormat.parse(event.getLongDate()));
+            Log.d("LONG_DATE", event.getLongDate());
         } catch (ParseException e) {
             Log.d("PARSE EXCEPTION", event.getLongDate());
         }

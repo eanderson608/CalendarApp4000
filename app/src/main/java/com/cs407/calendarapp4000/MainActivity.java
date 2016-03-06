@@ -27,12 +27,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayList<Event> eventArrayList;
     private CustomAdapter adapter;
     private Context context;
     private CalendarView calendarView;
     private String selectedDate;
     private Calendar cal;
+    private ArrayList<Event> eventArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         //initialize fields
         context = this;
         listView = (ListView) findViewById(R.id.list_view);
+        calendarView = (CalendarView) findViewById(R.id.calendar_view);
         eventArrayList = new ArrayList<>();
         adapter = new CustomAdapter(this, eventArrayList);
-        calendarView = (CalendarView) findViewById(R.id.calendar_view);
 
         //set adapter
         listView.setAdapter(adapter);
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 selectedDate = shortDateFormat.format(cal.getTime());
                 getEventsRetro(selectedDate);
-                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -98,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void getEventsRetro(String date) {
 
+        eventArrayList.clear();
+
         // Create REST adapter which points to the Event API endpoint
         EventClient client = ServiceGenerator.createService(EventClient.class);
 
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
+
                 if (response.isSuccess()) {
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
 
@@ -116,10 +118,8 @@ public class MainActivity extends AppCompatActivity {
                     for (Event e : response.body()) {
                         Log.d("EVENTS", e.toString());
                         eventArrayList.add(gson.fromJson(e.toString(), Event.class));
-
                     }
                     adapter.notifyDataSetChanged();
-
 
                 } else {
                     // error response, no access to resource?
@@ -135,7 +135,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "TRAGIC FAILURE!!!!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 }
