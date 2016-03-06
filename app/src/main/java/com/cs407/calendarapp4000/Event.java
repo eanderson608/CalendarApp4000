@@ -1,26 +1,20 @@
 package com.cs407.calendarapp4000;
 
-import java.util.Date;
-
-
-
 public class Event {
 
-    private String id;
+    private String _id;
     private String title;
     private String description;
-    private String date;
+    private String shortDate;
+    private String longDate;
     private String __v;
 
-    @Override
-    public String toString() {
-        return "{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", date='" + date + '\'' +
-                ", __v='" + __v + '\'' +
-                '}';
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getTitle() {
@@ -39,11 +33,31 @@ public class Event {
         this.description = description;
     }
 
-    public String getDate() {
-        return date;
+    public String getShortDate() {
+        return shortDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setShortDate(String shortDate) {
+        this.shortDate = shortDate;
+    }
+
+    public String getLongDate() {
+        return longDate;
+    }
+
+    public void setLongDate(String longDate) {
+        this.longDate = longDate;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "_id='" + _id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", shortDate='" + shortDate + '\'' +
+                ", longDate='" + longDate + '\'' +
+                ", __v='" + __v + '\'' +
+                '}';
     }
 }

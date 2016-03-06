@@ -21,6 +21,14 @@
             android:background="?attr/colorPrimary"
             android:elevation="4dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:id="@+id/date_text_view"
+            android:text="Date Text View"
+            android:textSize="18pt"/>
+
         <TimePicker
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >

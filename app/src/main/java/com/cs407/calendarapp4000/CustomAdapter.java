@@ -9,9 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by patron on 3/5/16.
@@ -19,12 +24,14 @@ import java.util.Date;
 public class CustomAdapter extends BaseAdapter {
     private ArrayList<Event> events;
     private Context context;
+    private String formattedTime;
+    private Calendar cal;
 
     // A cache for looking up Views
     private static class ViewHolder {
         TextView title;
         TextView description;
-        TextView date;
+        TextView time;
         Button delete;
     }
 
@@ -60,7 +67,7 @@ public class CustomAdapter extends BaseAdapter {
 
             viewHolder.title = (TextView) convertView.findViewById(R.id.title_text_view);
             viewHolder.description = (TextView) convertView.findViewById(R.id.description_text_view);
-            viewHolder.date = (TextView) convertView.findViewById(R.id.date_text_view);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.time_text_view);
             viewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
 
             convertView.setTag(viewHolder);
@@ -71,10 +78,21 @@ public class CustomAdapter extends BaseAdapter {
         // Get the data item for this position
         final Event event = getItem(position);
 
+        // Format time from longDate
+        cal = Calendar.getInstance();
+        SimpleDateFormat longDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm aaa", Locale.US);
+
+        try {
+            cal.setTime(longDateFormat.parse(event.getLongDate()));
+        } catch (ParseException e) {
+            Log.d("PARSE EXCEPTION", event.getLongDate());
+        }
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+
         // Populate the data into the template view using the data object
+        viewHolder.time.setText(timeFormat.format(cal.getTime()));
         viewHolder.title.setText(event.getTitle());
         viewHolder.description.setText(event.getDescription());
-        viewHolder.date.setText(event.getDate().toString());
         viewHolder.delete.setText("Delete");
 
         //TODO implement onclick for delete (do this after implementing retrofit)

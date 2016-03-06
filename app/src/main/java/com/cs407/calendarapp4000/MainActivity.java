@@ -16,9 +16,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private CalendarView calendarView;
     private String selectedDate;
+    private Calendar cal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar cal = Calendar.getInstance();
+                cal = Calendar.getInstance();
+                SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyyMMdd");
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                selectedDate = cal.getTime().toString();
-                Toast.makeText(context, selectedDate, Toast.LENGTH_LONG).show();
+                selectedDate = shortDateFormat.format(cal.getTime());
+                getEventsRetro(selectedDate);
+                adapter.notifyDataSetChanged();
             }
         });
-
-        getEventsRetro();
     }
 
     @Override
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             // Open AddEventActivity
             case R.id.action_add:
                 Intent intent = new Intent(this, com.cs407.calendarapp4000.AddEventActivity.class);
-                intent.putExtra("EXTRA_DATE", selectedDate);
+                intent.putExtra("EXTRA_CALENDAR", cal);
                 startActivity(intent);
 
             default:
@@ -95,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void getEventsRetro() {
+    private void getEventsRetro(String date) {
 
         // Create REST adapter which points to the Event API endpoint
         EventClient client = ServiceGenerator.createService(EventClient.class);
 
         // Fetch a list of Events
-        Call<ArrayList<Event>> call = client.getEvents();
+        Call<ArrayList<Event>> call = client.getEvents(date);
 
         call.enqueue(new Callback<ArrayList<Event>>() {
 
