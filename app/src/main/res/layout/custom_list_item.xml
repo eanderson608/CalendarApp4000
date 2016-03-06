@@ -25,7 +25,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="title of event"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:id="@+id/title_text_view" />
 

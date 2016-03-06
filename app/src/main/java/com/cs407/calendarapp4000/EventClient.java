@@ -1,6 +1,6 @@
 package com.cs407.calendarapp4000;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -10,5 +10,5 @@ import retrofit2.http.GET;
  */
 public interface EventClient {
     @GET("/api/events")
-    Call<List<Event>> getEvents();
+    Call<ArrayList<Event>> getEvents();
 }

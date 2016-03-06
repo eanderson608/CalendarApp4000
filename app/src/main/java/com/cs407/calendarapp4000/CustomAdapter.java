@@ -69,12 +69,12 @@ public class CustomAdapter extends BaseAdapter {
         }
 
         // Get the data item for this position
-        final Event game = getItem(position);
+        final Event event = getItem(position);
 
         // Populate the data into the template view using the data object
-        viewHolder.title.setText("Event Title");
-        viewHolder.description.setText("a short description of the event");
-        viewHolder.date.setText("event date");
+        viewHolder.title.setText(event.getTitle());
+        viewHolder.description.setText(event.getDescription());
+        viewHolder.date.setText(event.getDate().toString());
         viewHolder.delete.setText("Delete");
 
         //TODO implement onclick for delete (do this after implementing retrofit)
