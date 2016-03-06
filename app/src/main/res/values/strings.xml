@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CalendarApp4000</string>
+    <string name="title_addevent">Add Event</string>
 </resources>
