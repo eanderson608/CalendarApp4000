@@ -5,19 +5,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by patron on 3/5/16.
@@ -96,15 +97,41 @@ public class CustomAdapter extends BaseAdapter {
         viewHolder.title.setText(event.getTitle());
         viewHolder.description.setText(event.getDescription());
 
-        //TODO implement onclick for delete (do this after implementing retrofit)
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("CUSTOM_ADAPTER", "Delete button was pressed");
+                deleteEventRetro(event);
             }
         });
 
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    private void deleteEventRetro(final Event event) {
+
+        EventClient client = ServiceGenerator.createService(EventClient.class);
+
+        Call<ResponseBody> call = client.deleteEvent(event.get_id());
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccess()) {
+                    Log.d("SUCCESS", response.raw().toString());
+                    MainActivity.getEventsRetro(event.getShortDate());
+                } else {
+                    // error response, no access to resource?
+                    Log.d("ERROR", response.raw().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // something went completely south (like no internet connection)
+                Log.d("Error", t.getMessage());
+            }
+        });
     }
 }

@@ -27,12 +27,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
-    private CustomAdapter adapter;
-    private Context context;
+    private static CustomAdapter adapter;
+    private static Context context;
     private CalendarView calendarView;
     private String selectedDate;
     private Calendar cal;
-    private ArrayList<Event> eventArrayList;
+    private static ArrayList<Event> eventArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void getEventsRetro(String date) {
+    static public void getEventsRetro(String date) {
 
         eventArrayList.clear();
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // error response, no access to resource?
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
-                    Toast.makeText(getApplicationContext(), "ERROR: " + response.raw().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "ERROR: " + response.raw().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
-                Toast.makeText(getApplicationContext(), "TRAGIC FAILURE!!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "TRAGIC FAILURE!!!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
