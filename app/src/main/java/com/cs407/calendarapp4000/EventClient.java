@@ -2,11 +2,12 @@ package com.cs407.calendarapp4000;
 
 import java.util.ArrayList;
 
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -18,4 +19,7 @@ public interface EventClient {
 
     @DELETE("/api/events/{id}")
     Call<ResponseBody> deleteEvent(@Path("id") String id);
+
+    @POST("/api/events/")
+    Call<ResponseBody> postEvent(@Body Event event);
 }
