@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class CustomAdapter extends BaseAdapter {
         TextView title;
         TextView description;
         TextView time;
-        Button delete;
+        ImageButton delete;
     }
 
     public CustomAdapter(Context context, ArrayList<Event> events) {
@@ -68,7 +69,7 @@ public class CustomAdapter extends BaseAdapter {
             viewHolder.title = (TextView) convertView.findViewById(R.id.title_text_view);
             viewHolder.description = (TextView) convertView.findViewById(R.id.description_text_view);
             viewHolder.time = (TextView) convertView.findViewById(R.id.time_text_view);
-            viewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
+            viewHolder.delete = (ImageButton) convertView.findViewById(R.id.delete_button);
 
             convertView.setTag(viewHolder);
         } else {
@@ -94,7 +95,6 @@ public class CustomAdapter extends BaseAdapter {
         viewHolder.time.setText(timeFormat.format(cal.getTime()));
         viewHolder.title.setText(event.getTitle());
         viewHolder.description.setText(event.getDescription());
-        viewHolder.delete.setText("Delete");
 
         //TODO implement onclick for delete (do this after implementing retrofit)
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {

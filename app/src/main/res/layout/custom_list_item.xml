@@ -37,13 +37,13 @@
         </LinearLayout>
 
 
-        <Button
+        <ImageButton
             android:layout_weight=".75"
+            android:background="@color/transparent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Delete"
-            android:id="@+id/delete_button"
-            android:focusable="false" />
+            android:src="@drawable/ic_delete_white_48dp"
+            android:id="@+id/delete_button" />
 
     </LinearLayout>
 
