@@ -19,6 +19,8 @@ import com.google.gson.GsonBuilder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         calendarView = (CalendarView) findViewById(R.id.calendar_view);
         eventArrayList = new ArrayList<>();
         adapter = new CustomAdapter(this, eventArrayList);
+        final SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        cal = Calendar.getInstance();
+
 
         //set adapter
         listView.setAdapter(adapter);
@@ -58,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                cal = Calendar.getInstance();
-                SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyyMMdd");
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                 getEventsRetro(selectedDate);
             }
         });
+
+        // get events for today
+        getEventsRetro(shortDateFormat.format(cal.getTime()));
     }
 
     @Override
