@@ -19,7 +19,6 @@ import com.google.gson.GsonBuilder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
     private static CustomAdapter adapter;
-    private static Context context;
     private CalendarView calendarView;
     private String selectedDate;
     private Calendar cal;
@@ -46,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //initialize fields
-        context = this;
         listView = (ListView) findViewById(R.id.list_view);
         calendarView = (CalendarView) findViewById(R.id.calendar_view);
         eventArrayList = new ArrayList<>();
@@ -95,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
-
         return true;
     }
 
@@ -104,11 +100,7 @@ public class MainActivity extends AppCompatActivity {
     static public void getEventsRetro(String date) {
 
         eventArrayList.clear();
-
-        // Create REST adapter which points to the Event API endpoint
         EventClient client = ServiceGenerator.createService(EventClient.class);
-
-        // Fetch a list of Events
         Call<ArrayList<Event>> call = client.getEvents(date);
 
         call.enqueue(new Callback<ArrayList<Event>>() {
@@ -130,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // error response, no access to resource?
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
-                    Toast.makeText(context, "ERROR: " + response.raw().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -138,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 // something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
-                Toast.makeText(context, "TRAGIC FAILURE!!!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
